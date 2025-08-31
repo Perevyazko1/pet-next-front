@@ -1,0 +1,32 @@
+@font-face {
+  font-family: 'Airfool';
+  src: url('fonts/Airfool.eot') format('eot');
+  src: local('@'), url('./fonts/Airfool.otf') format('otf'),
+       url('./fonts/Airfool.ttf') format('ttf'),
+       url('fonts/Airfool.pfb') format('pfb'),
+       url('fonts/Airfool.woff') format('woff'),
+       url('fonts/Airfool.woff2') format('woff2');
+
+    //font-weight: 400;
+    //font-style: normal;
+    //font-size: 32px;
+    //line-height: 36.81px;
+}
+
+@font-face {
+  font-family: 'CeraPro-Regular';
+  src: url('fonts/CeraPro-Regular.eot') format('eot');
+  src: local('@'),url('./fonts/CeraPro-Regular.ttf') format('ttf'),
+       url('fonts/CeraPro-Regular.woff') format('woff'),
+       url('fonts/CeraPro-Regular.woff2') format('woff2');
+
+}
+
+@font-face {
+  font-family: 'CeraPro-Bold';
+  src: url('fonts/CeraPro-Bold.eot') format('eot');
+  src: local('@'),url('./fonts/CeraPro-Bold.ttf') format('ttf'),
+       url('fonts/CeraPro-Bold.woff') format('woff'),
+       url('fonts/CeraPro-Bold.woff2') format('woff2');
+
+}
