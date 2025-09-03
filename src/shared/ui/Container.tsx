@@ -21,9 +21,9 @@ export const Container = ({
       id={id}
       ref={ref}
       className={cn(
-        fullContainer ? '' : 'max-w-[1920px]',
-        mobileScreen ? 'px-0' : 'px-4',
-        'md:px-[40px] xl:px-[100px]',
+        fullContainer ? '' : 'max-w-[1518px]',
+        // mobileScreen ? 'px-0' : 'px-4',
+        // 'md:px-[40px] xl:px-[100px]',
         'mx-auto w-full',
         className,
       )}>
