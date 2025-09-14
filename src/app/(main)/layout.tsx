@@ -1,19 +1,16 @@
-import {ReactNode} from 'react';
-import {SideBarCustom} from "@/shared/ui/side-bar";
+import { ReactNode } from 'react';
+import { SideBarCustom } from '@/shared/ui/side-bar';
 
 interface Props {
   children?: ReactNode;
 }
 
 export default async function Layout({ children }: Props) {
-
-
   return (
-    <div className="relative max-w-[1920px] mx-auto flex min-h-screen flex-row bg-white py-10 px-12 md:gap-7">
-        <SideBarCustom />
+    <div className="relative mx-auto flex min-h-screen max-w-[1920px] flex-row bg-white px-5 py-10 md:gap-7 md:px-12">
+      <SideBarCustom />
 
-        {children}
-
+      {children}
     </div>
   );
 }

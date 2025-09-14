@@ -10,6 +10,28 @@ import { BigPawIcon } from '@/shared/ui/icons/BigPawIcon';
 import Image from 'next/image';
 import { cn } from '@/shared/lib';
 import { airfool } from '@/shared/config/fonts';
+import { Input } from '@heroui/input';
+
+const inputClassNames = {
+  inputWrapper: [
+    '!px-6 !py-3 !rounded-lg !bg-white',
+    'border-outline-primary border-b',
+    'after:!h-[1px] after:bottom-[-1px] after:bg-white',
+    'group-data-[invalid=true]:border-error',
+    'group-data-[invalid=true]:after:!bg-error',
+    'md:h-[3.5rem] h-[3rem]',
+  ],
+  innerWrapper: 'pb-0',
+  // label: [
+  //   '!top-3',
+  //   'text-[0.75rem] font-medium',
+  //   '!text-dark-inactive',
+  //   'group-data-[focus=true]:!text-dark-inactive',
+  //   'group-data-[invalid=true]:!text-error',
+  // ],
+  input:
+    '!text-black !font-normal placeholder:text-[#121212B2] placeholder:text-base',
+};
 
 export const MainPage = () => {
   return (
@@ -55,7 +77,7 @@ export const MainPage = () => {
 
               <h2
                 className={
-                  'mb-10 mt-1 text-center text-[clamp(1rem,0.971rem+0.128vw,1.125rem)] font-normal max-md:leading-[100%] md:mb-6 md:mt-3 md:text-left'
+                  'mb-10 mt-1 text-center text-[clamp(1rem,0.971rem+0.128vw,1.125rem)] font-normal text-text-primary max-md:leading-[100%] md:mb-6 md:mt-3 md:text-left'
                 }>
                 {texts.mainSubTitle}
               </h2>
@@ -137,6 +159,104 @@ export const MainPage = () => {
               </p>
               <p>{texts.aboutUs.partThree}</p>
               <p>{texts.aboutUs.partFour}</p>
+            </div>
+          </div>
+          <div
+            className={
+              'relative rounded-lg bg-accent md:aspect-[1518/294] md:px-12'
+            }>
+            <p
+              className={
+                'mb-3 mt-16 w-[80%] text-center text-[clamp(1.5rem,1.154rem+1.538vi,3rem)] font-bold text-black max-md:mx-auto md:mb-0 md:mt-9 md:w-full md:max-w-[65%] md:text-left'
+              }>
+              {texts.record_visit}
+            </p>
+            <BigPawIcon
+              className={
+                'absolute left-1/2 top-[44px] size-[clamp(5rem,2.5rem+5.208vi,8.75rem)] max-md:-translate-x-1/2 md:left-12 md:top-2'
+              }
+            />
+            <p
+              className={
+                'px-4 text-center text-[clamp(1rem,0.971rem+0.128vw,1.125rem)] font-normal text-text-primary max-md:leading-[100%] md:mb-6 md:max-w-fit md:px-0 md:text-left'
+              }>
+              {texts.record_subtitle}
+            </p>
+            <div
+              className={
+                'mt-6 flex flex-col flex-wrap items-center gap-7 px-10 md:mb-16 md:mt-0 md:max-w-[80%] md:flex-row md:items-baseline md:px-0 lg1:max-w-[60%]'
+              }>
+              <Input
+                className="h-[44px] w-full md:h-[46px] md:w-[210px]"
+                classNames={inputClassNames}
+                // value={fullName}
+                placeholder={texts.yor_name}
+                // onChange={(e) =>
+                //   onChangeHandler(e.target.value, 'fullName', setFullName)
+                // }
+                // isInvalid={!!errors.fullName}
+                // isDisabled={!isEditMode}
+              />
+              <Input
+                className="h-[44px] w-full md:h-[46px] md:w-[210px]"
+                classNames={inputClassNames}
+                // value={fullName}
+                placeholder={texts.yor_phone}
+                // onChange={(e) =>
+                //   onChangeHandler(e.target.value, 'fullName', setFullName)
+                // }
+                // isInvalid={!!errors.fullName}
+                // isDisabled={!isEditMode}
+              />
+              <Input
+                className="h-[44px] w-full md:h-[46px] md:w-[210px]"
+                classNames={inputClassNames}
+                // value={fullName}
+                placeholder={texts.yor_email}
+                // onChange={(e) =>
+                //   onChangeHandler(e.target.value, 'fullName', setFullName)
+                // }
+                // isInvalid={!!errors.fullName}
+                // isDisabled={!isEditMode}
+              />{' '}
+              <Input
+                className="h-[44px] w-full md:h-[46px] md:w-[210px]"
+                classNames={inputClassNames}
+                // value={fullName}
+                placeholder={texts.shelters}
+                // onChange={(e) =>
+                //   onChangeHandler(e.target.value, 'fullName', setFullName)
+                // }
+                // isInvalid={!!errors.fullName}
+                // isDisabled={!isEditMode}
+              />
+              <Button className={'h-[49px] w-[140px] md:h-[46px] md:w-auto'}>
+                {texts.send}
+              </Button>
+            </div>
+            <div
+              className={
+                'relative bottom-0 right-0 aspect-[319/187] w-full md:absolute md:-bottom-2 md:aspect-[474/188] md:w-[37%]'
+              }>
+              <BigBoneIcon
+                className={
+                  'absolute bottom-0 size-[clamp(10.375rem,0.449rem+44.118vi,21.625rem)] rotate-[1rad] md:h-[clamp(8.625rem,4.875rem+7.813vi,14.25rem)] md:w-[clamp(8.813rem,5.063rem+7.813vi,14.438rem)]'
+                }
+              />
+              <MiniBoneIcon
+                className={
+                  'absolute left-5 top-[30%] size-[clamp(3.063rem,2.229rem+1.736vi,4.313rem)] rotate-[2rad] md:-top-4 md:right-[83%]'
+                }
+              />
+              <Image
+                width={474}
+                height={188}
+                className={
+                  'absolute bottom-0 z-10 w-full object-cover md:bottom-auto'
+                }
+                src={'/mini-korgi.png'}
+                alt={'mini-korgi'}
+              />
             </div>
           </div>
         </div>

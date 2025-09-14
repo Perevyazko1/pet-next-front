@@ -4,6 +4,14 @@ export const texts = {
   shelter: 'Приютить',
   donate: 'Пожертвовать',
   paws: 'Лапки',
+  record_visit: 'Записаться на посещение',
+  yor_name: 'Ваше имя',
+  yor_email: 'Ваш email',
+  shelters: 'Приют',
+  yor_phone: 'Ваш телефон',
+  send: 'отправить',
+  record_subtitle:
+    'Заполните форму ниже и наш менеджер свяжется с Вами, чтобы договориться о времени посещения',
   aboutUs: {
     title: 'O нас',
     partOne: '«Лапки»',
