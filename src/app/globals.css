@@ -26,3 +26,27 @@
 /*  !*color: var(--foreground);*!*/
 /*  font-family: "CeraPro-Regular", serif;;*/
 /*}*/
+
+.slick-dots li button:before{
+  display: none;
+}
+.slick-slide {
+  height: inherit!important;
+  padding: 0 15px;
+}
+
+.slick-dots .slick-active   {
+  background-color: #2C5F42!important;
+}
+.slick-dots li  {
+  width: 30px !important;
+  height: 3px !important;
+  border-radius: 5px !important;
+  background-color: #C2CCC6 !important;
+  padding: 0!important;
+}
+.slick-dots li, .slick-dots li  {
+  width: 30px !important;
+  height: 3px !important;
+
+}

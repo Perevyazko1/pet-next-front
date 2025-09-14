@@ -11,6 +11,7 @@ import Image from 'next/image';
 import { cn } from '@/shared/lib';
 import { airfool } from '@/shared/config/fonts';
 import { Input } from '@heroui/input';
+import { Carousel } from '@/shared/ui/carousel';
 
 const inputClassNames = {
   inputWrapper: [
@@ -32,6 +33,15 @@ const inputClassNames = {
   input:
     '!text-black !font-normal placeholder:text-[#121212B2] placeholder:text-base',
 };
+
+const CAROUSEL_PHOTO = [
+  { id: 0, url: '/carousel/1.png' },
+  { id: 1, url: '/carousel/3.png' },
+  { id: 3, url: '/carousel/5.png' },
+  { id: 4, url: '/carousel/1.png' },
+  { id: 5, url: '/carousel/3.png' },
+  { id: 6, url: '/carousel/5.png' },
+];
 
 export const MainPage = () => {
   return (
@@ -257,6 +267,40 @@ export const MainPage = () => {
                 src={'/mini-korgi.png'}
                 alt={'mini-korgi'}
               />
+            </div>
+          </div>
+          <div className={'relative rounded-lg bg-accent pb-[60px] md:px-12'}>
+            <div
+              className={
+                'absolute left-1/2 top-[64px] text-[clamp(1.5rem,1.154rem+1.538vi,3rem)] font-bold text-black max-md:-translate-x-1/2 md:left-[2vw] md:top-[3.5vw]'
+              }>
+              {texts.photo}
+            </div>
+            <BigPawIcon
+              className={
+                'absolute left-1/2 top-[44px] size-[clamp(5rem,2.5rem+5.208vi,8.75rem)] max-md:-translate-x-1/2 md:left-[1.5vw] md:top-[1.5vw]'
+              }
+            />
+            <div className={'mt-[11rem]'}>
+              <Carousel
+                speed={1000}
+                autoplay
+                dotsMobile
+                infinite
+                length={CAROUSEL_PHOTO?.length}>
+                {CAROUSEL_PHOTO &&
+                  CAROUSEL_PHOTO.map((photo, i) => (
+                    <div className={'aspect-[300/300]'} key={photo.id}>
+                      <Image
+                        className={'w-full object-cover'}
+                        width={300}
+                        height={300}
+                        src={photo.url}
+                        alt={photo.url}
+                      />
+                    </div>
+                  ))}
+              </Carousel>
             </div>
           </div>
         </div>
