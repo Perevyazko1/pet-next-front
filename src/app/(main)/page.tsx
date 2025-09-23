@@ -1,7 +1,5 @@
-import {MainPage} from "@/pages/main";
+import { HomePage } from '@/pages/main';
 
-export default function Home() {
-  return (
-   <MainPage/>
-  );
+export default async function Home() {
+  return <HomePage />;
 }

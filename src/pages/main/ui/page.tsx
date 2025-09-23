@@ -43,7 +43,7 @@ const CAROUSEL_PHOTO = [
   { id: 6, url: '/carousel/5.png' },
 ];
 
-export const MainPage = () => {
+export const HomePage = () => {
   return (
     <>
       <Container>
@@ -55,12 +55,12 @@ export const MainPage = () => {
             <div className={'relative hidden md:block'}>
               <BigBoneIcon
                 className={
-                  'absolute left-[4vw] top-[3vw] md:size-[clamp(5rem,2.208rem+5.816vw,9.188rem)]'
+                  'chaotic-animation absolute left-[4vw] top-[3vw] md:size-[clamp(5rem,2.208rem+5.816vw,9.188rem)]'
                 }
               />
               <MiniBoneIcon
                 className={
-                  'absolute left-[10.5vw] top-[5vw] md:size-[clamp(1.5rem,0.667rem+1.736vw,2.75rem)]'
+                  'chaotic-animation absolute left-[10.5vw] top-[5vw] md:size-[clamp(1.5rem,0.667rem+1.736vw,2.75rem)]'
                 }
               />
             </div>
@@ -136,12 +136,12 @@ export const MainPage = () => {
             />
             <BigBoneIcon
               className={
-                'absolute right-auto top-[57vw] size-[clamp(5.625rem,4.375rem+2.604vi,7.5rem)] md:right-[1.5vw] md:top-[2vw]'
+                'chaotic-animation absolute right-[80%] top-[57vw] size-[clamp(5.625rem,4.375rem+2.604vi,7.5rem)] md:right-[2.5vw] md:top-[3vw]'
               }
             />
             <MiniBoneIcon
               className={
-                'absolute right-auto top-[60vw] size-[clamp(2.5rem,2.083rem+0.868vi,3.125rem)] max-md:left-[60px] md:right-[1.5vw] md:top-[2.5vw]'
+                'chaotic-animation absolute right-auto top-[60vw] size-[clamp(2.5rem,2.083rem+0.868vi,3.125rem)] max-md:left-[100px] md:right-[2.5vw] md:top-[3.5vw]'
               }
             />
             <div
@@ -171,6 +171,7 @@ export const MainPage = () => {
               <p>{texts.aboutUs.partFour}</p>
             </div>
           </div>
+
           <div
             className={
               'relative rounded-lg bg-accent md:aspect-[1518/294] md:px-12'
@@ -250,12 +251,12 @@ export const MainPage = () => {
               }>
               <BigBoneIcon
                 className={
-                  'absolute bottom-0 size-[clamp(10.375rem,0.449rem+44.118vi,21.625rem)] rotate-[1rad] md:h-[clamp(8.625rem,4.875rem+7.813vi,14.25rem)] md:w-[clamp(8.813rem,5.063rem+7.813vi,14.438rem)]'
+                  'chaotic-animation absolute bottom-[20%] right-7 size-[clamp(10.375rem,0.449rem+44.118vi,21.625rem)] rotate-[1rad] md:h-[clamp(8.625rem,4.875rem+7.813vi,14.25rem)] md:w-[clamp(8.813rem,5.063rem+7.813vi,14.438rem)]'
                 }
               />
               <MiniBoneIcon
                 className={
-                  'absolute left-5 top-[30%] size-[clamp(3.063rem,2.229rem+1.736vi,4.313rem)] rotate-[2rad] md:-top-4 md:right-[83%]'
+                  'chaotic-animation absolute left-5 top-[30%] size-[clamp(3.063rem,2.229rem+1.736vi,4.313rem)] rotate-[2rad] md:-top-4 md:right-[83%]'
                 }
               />
               <Image
@@ -281,6 +282,16 @@ export const MainPage = () => {
                 'absolute left-1/2 top-[44px] size-[clamp(5rem,2.5rem+5.208vi,8.75rem)] max-md:-translate-x-1/2 md:left-[1.5vw] md:top-[1.5vw]'
               }
             />
+            <MiniBoneIcon
+              className={
+                'chaotic-animation absolute right-5 top-[30%] size-[clamp(3.063rem,2.229rem+1.736vi,4.313rem)] md:right-[20%] md:top-[20%]'
+              }
+            />
+            <BigPawIcon
+              className={
+                'chaotic-animation absolute bottom-[44px] size-[clamp(5.625rem,3.125rem+5.208vi,9.375rem)] md:bottom-[5%] md:left-[20%]'
+              }
+            />
             <div className={'mt-[11rem]'}>
               <Carousel
                 speed={1000}
@@ -302,6 +313,109 @@ export const MainPage = () => {
                   ))}
               </Carousel>
             </div>
+          </div>
+          <div
+            className={
+              'relative flex flex-col rounded-lg bg-accent px-4 md:px-12'
+            }>
+            <p
+              className={
+                'mb-3 mt-16 text-center text-[clamp(1.5rem,1.154rem+1.538vi,3rem)] font-bold text-black max-md:mx-auto md:mb-0 md:mt-9 md:text-left'
+              }>
+              {texts.how_get_new_friend}
+            </p>
+            <BigPawIcon
+              className={
+                'absolute left-1/2 top-[44px] size-[clamp(5rem,2.5rem+5.208vi,8.75rem)] max-md:-translate-x-1/2 md:left-12 md:top-2'
+              }
+            />
+            <BigBoneIcon
+              className={
+                'chaotic-animation absolute right-auto top-1/2 size-[9.375rem] md:right-[2.5vw] md:top-[3vw] md:size-[clamp(5.625rem,3.542rem+4.34vi,8.75rem)]'
+              }
+            />
+            <MiniBoneIcon
+              className={
+                'chaotic-animation absolute right-auto top-1/2 size-[clamp(2.5rem,2.083rem+0.868vi,3.125rem)] max-md:left-[70%] md:right-[2.5vw] md:top-[3.5vw]'
+              }
+            />
+            <BigBoneIcon
+              className={
+                'chaotic-animation absolute bottom-[70%] left-[30%] size-[clamp(5.625rem,4.375rem+2.604vi,7.5rem)] md:bottom-[8vw] md:left-[2.5vw]'
+              }
+            />
+            <div
+              className={
+                'mt-11 flex max-w-[46.25rem] flex-col flex-wrap justify-between gap-7 max-lg:mx-auto md:flex-row lg:max-w-full lg:gap-3'
+              }>
+              <div className={'flex flex-col items-center'}>
+                <div
+                  className={cn(
+                    'text-[6rem] font-normal leading-[100%] tracking-[0px]',
+                    airfool.className,
+                  )}>
+                  1
+                </div>
+                <div
+                  className={
+                    'text-ellipsis px-1 text-center text-[clamp(1rem,0.971rem+0.128vw,1.125rem)] font-normal text-text-primary max-md:leading-[100%] md:whitespace-pre-line'
+                  }>
+                  {texts.selectBeast}
+                </div>
+              </div>
+              <div className={'flex flex-col items-center'}>
+                <div
+                  className={cn(
+                    'text-[6rem] font-normal leading-[100%] tracking-[0px]',
+                    airfool.className,
+                  )}>
+                  2
+                </div>
+                <div
+                  className={
+                    'text-ellipsis px-1 text-center text-[clamp(1rem,0.971rem+0.128vw,1.125rem)] font-normal text-text-primary max-md:leading-[100%] md:whitespace-pre-line'
+                  }>
+                  {texts.fillOutTheForm}
+                </div>
+              </div>
+
+              <div className={'flex flex-col items-center'}>
+                <div
+                  className={cn(
+                    'text-[6rem] font-normal leading-[100%] tracking-[0px]',
+                    airfool.className,
+                  )}>
+                  3
+                </div>
+                <div
+                  className={
+                    'text-ellipsis px-1 text-center text-[clamp(1rem,0.971rem+0.128vw,1.125rem)] font-normal text-text-primary max-md:leading-[100%] md:whitespace-pre-line'
+                  }>
+                  {texts.select_beast}
+                </div>
+              </div>
+              <div className={'flex flex-col items-center'}>
+                <div
+                  className={cn(
+                    'text-[6rem] font-normal leading-[100%] tracking-[0px]',
+                    airfool.className,
+                  )}>
+                  4
+                </div>
+                <div
+                  className={
+                    'text-ellipsis px-1 text-center text-[clamp(1rem,0.971rem+0.128vw,1.125rem)] font-normal text-text-primary max-md:leading-[100%] md:whitespace-pre-line'
+                  }>
+                  {texts.expectACall}
+                </div>
+              </div>
+            </div>
+            <Button
+              className={
+                'mx-auto mb-14 mt-9 h-[49px] w-full md:mt-6 md:w-[134px]'
+              }>
+              {texts.shelter}
+            </Button>
           </div>
         </div>
       </Container>
