@@ -346,7 +346,7 @@ export const HomePage = () => {
             />
             <div
               className={
-                'mt-11 flex max-w-[46.25rem] flex-col flex-wrap justify-between gap-7 max-lg:mx-auto md:flex-row lg:max-w-full lg:gap-3'
+                'mt-11 flex max-w-[46.25rem] flex-col flex-wrap justify-between gap-7 max-lg:mx-auto md:max-w-full md:flex-row md:flex-nowrap lg:gap-3'
               }>
               <div className={'flex flex-col items-center'}>
                 <div
@@ -391,7 +391,7 @@ export const HomePage = () => {
                   className={
                     'text-ellipsis px-1 text-center text-[clamp(1rem,0.971rem+0.128vw,1.125rem)] font-normal text-text-primary max-md:leading-[100%] md:whitespace-pre-line'
                   }>
-                  {texts.select_beast}
+                  {texts.expectACall}
                 </div>
               </div>
               <div className={'flex flex-col items-center'}>
@@ -406,7 +406,7 @@ export const HomePage = () => {
                   className={
                     'text-ellipsis px-1 text-center text-[clamp(1rem,0.971rem+0.128vw,1.125rem)] font-normal text-text-primary max-md:leading-[100%] md:whitespace-pre-line'
                   }>
-                  {texts.expectACall}
+                  {texts.getYourNewFriend}
                 </div>
               </div>
             </div>
@@ -416,6 +416,97 @@ export const HomePage = () => {
               }>
               {texts.shelter}
             </Button>
+          </div>
+          <div
+            className={
+              'donates-block relative grid grid-cols-1 rounded-lg bg-accent md:aspect-[1518/624] md:grid-cols-2 md:pl-12 md:pr-0'
+            }>
+            <p
+              className={
+                'header-donates mb-3 mt-16 w-[80%] text-center text-[clamp(1.5rem,1.154rem+1.538vi,3rem)] font-bold text-black max-md:mx-auto md:mb-0 md:mt-9 md:w-full md:max-w-[65%] md:text-left'
+              }>
+              {texts.donates}
+            </p>
+            <BigPawIcon
+              className={
+                'absolute left-1/2 top-[44px] size-[clamp(5rem,2.5rem+5.208vi,8.75rem)] max-md:-translate-x-1/2 md:left-12 md:top-2'
+              }
+            />
+            <div className={'buttons-donates w-full'}>
+              <p
+                className={
+                  'text-ellipsis text-center text-[clamp(1rem,0.971rem+0.128vw,1.125rem)] font-normal text-text-primary max-md:leading-[100%] md:w-[150%] md:text-left'
+                }>
+                {texts.togetherWeCan}
+              </p>
+              <p
+                className={
+                  'mt-6 text-center text-[clamp(1.125rem,1.038rem+0.385vi,1.5rem)] leading-[160%] tracking-[0px] md:w-[150%] md:text-left'
+                }>
+                {texts.selectYourDonationAmount}
+              </p>
+              <div className={'mt-6 flex flex-col items-center gap-4 md:pb-12'}>
+                <Button className={'h-[44px] w-[50%] md:h-[49px] md:w-[50%]'}>
+                  {texts.twoHundred}
+                </Button>
+                <Button className={'h-[44px] w-[50%] md:h-[49px] md:w-[60%]'}>
+                  {texts.fiveHundred}
+                </Button>
+                <Button className={'h-[44px] w-[50%] md:h-[49px] md:w-[70%]'}>
+                  {texts.thousand}
+                </Button>
+                <Button className={'h-[44px] w-[50%] md:h-[49px] md:w-[80%]'}>
+                  {texts.twoThousand}
+                </Button>
+
+                <Input
+                  className="h-[44px] w-[50%] md:h-[49px] md:w-full"
+                  classNames={inputClassNames}
+                  // value={fullName}
+                  placeholder={texts.otherAmount}
+                  // onChange={(e) =>
+                  //   onChangeHandler(e.target.value, 'fullName', setFullName)
+                  // }
+                  // isInvalid={!!errors.fullName}
+                  // isDisabled={!isEditMode}
+                />
+              </div>
+            </div>
+            <div
+              className={'img-mops relative flex w-full items-end justify-end'}>
+              <Image
+                width={553}
+                height={623}
+                className={'max-h-full object-contain max-md:w-full'}
+                src={'/big-mops.png'}
+                alt={'big-mops'}
+              />
+            </div>
+            <BigPawIcon
+              className={
+                'chaotic-animation absolute bottom-1/2 left-1/2 block size-[clamp(5.625rem,3.125rem+5.208vi,9.375rem)] max-[1700px]:hidden'
+              }
+            />
+            <BigBoneIcon
+              className={
+                'chaotic-animation absolute bottom-[70%] left-[30%] block size-[clamp(5.625rem,4.375rem+2.604vi,7.5rem)] max-[1700px]:hidden md:bottom-[8vw] md:left-1/2'
+              }
+            />
+            <MiniBoneIcon
+              className={
+                'chaotic-animation absolute left-[10%] top-1/2 size-[clamp(2.5rem,2.083rem+0.868vi,3.125rem)] md:left-[2.5vw] md:top-1/2'
+              }
+            />
+            <BigBoneIcon
+              className={
+                'chaotic-animation absolute bottom-[70%] left-[10%] block size-[clamp(5.625rem,4.375rem+2.604vi,7.5rem)] md:bottom-[8vw] md:hidden'
+              }
+            />
+            <BigPawIcon
+              className={
+                'chaotic-animation absolute bottom-[60%] right-[10%] block size-[clamp(5.625rem,4.375rem+2.604vi,7.5rem)] md:hidden'
+              }
+            />
           </div>
         </div>
       </Container>
