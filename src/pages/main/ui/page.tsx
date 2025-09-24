@@ -300,7 +300,7 @@ export const HomePage = () => {
                 infinite
                 length={CAROUSEL_PHOTO?.length}>
                 {CAROUSEL_PHOTO &&
-                  CAROUSEL_PHOTO.map((photo, i) => (
+                  CAROUSEL_PHOTO.map((photo) => (
                     <div className={'aspect-[300/300]'} key={photo.id}>
                       <Image
                         className={'w-full object-cover'}

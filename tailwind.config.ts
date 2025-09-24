@@ -17,6 +17,7 @@ export default {
         lg1: '940px',
         lg2: '1080px',
         md: '768px',
+        sm1: '640px',
         sm: '375px',
       },
       colors: {
