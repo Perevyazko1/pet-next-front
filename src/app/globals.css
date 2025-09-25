@@ -121,3 +121,19 @@
                           'mops';
   }
 }
+body {
+  cursor: url('/paw-cursor.png') 4 4, auto;
+}
+
+.paw-bounce {
+  animation: bounce alternate-reverse 0.5s 9;
+}
+
+@keyframes bounce {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-10px);
+  }
+}

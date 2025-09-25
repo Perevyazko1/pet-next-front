@@ -39,7 +39,7 @@ export const NewsPage = () => {
   ];
 
   const [currentNews, setCurrentNews] = useState<InfoCardInterface>(NEWS[0]);
-  const { setInfoId, infoId } = useQueryParams();
+  const { setInfoId } = useQueryParams();
 
   const handleClick = (index: number) => {
     setCurrentNews(NEWS[0]);

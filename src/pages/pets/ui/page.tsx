@@ -67,7 +67,7 @@ export const PetsPage = () => {
     },
   ];
   const [currentPet, setCurrentPet] = useState<InfoCardInterface>(PETS[0]);
-  const { setInfoId, infoId } = useQueryParams();
+  const { setInfoId } = useQueryParams();
 
   const handleClick = (index: number) => {
     setCurrentPet(PETS[index]);

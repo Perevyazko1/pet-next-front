@@ -23,13 +23,7 @@ const inputClassNames = {
     'md:h-[3.5rem] h-[3rem]',
   ],
   innerWrapper: 'pb-0',
-  // label: [
-  //   '!top-3',
-  //   'text-[0.75rem] font-medium',
-  //   '!text-dark-inactive',
-  //   'group-data-[focus=true]:!text-dark-inactive',
-  //   'group-data-[invalid=true]:!text-error',
-  // ],
+
   input:
     '!text-black !font-normal placeholder:text-[#121212B2] placeholder:text-base',
 };
