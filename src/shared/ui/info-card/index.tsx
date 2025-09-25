@@ -11,8 +11,15 @@ import { CalendarIcon } from '@/shared/ui/icons/CalendarIcon';
 interface Props {
   info: InfoCardInterface;
   isNews?: boolean;
+  isModal?: boolean;
+  onclick?: () => void;
 }
-export const InfoCard = ({ info, isNews = false }: Props) => {
+export const InfoCard = ({
+  info,
+  onclick,
+  isNews = false,
+  isModal = false,
+}: Props) => {
   return (
     <div className={'flex flex-col gap-5 rounded-lg bg-accent p-4 md:p-5'}>
       <div
@@ -45,38 +52,83 @@ export const InfoCard = ({ info, isNews = false }: Props) => {
             'absolute font-black leading-[160%] tracking-[0px] text-white underline',
           )}>{`#${info.title}`}</p>
       </div>
-
-      <p
+      {isModal ? (
+        <p
+          className={clsx(
+            isNews
+              ? 'text-[clamp(1rem,0.971rem+0.128vi,1.125rem)]'
+              : 'text-base',
+            'font-normal leading-[140%] tracking-[0px] text-text-primary',
+          )}>
+          {info.description}
+        </p>
+      ) : (
+        <p
+          className={clsx(
+            isNews
+              ? 'line-clamp-2 text-[clamp(1rem,0.971rem+0.128vi,1.125rem)] sm1:line-clamp-3'
+              : 'line-clamp-2 text-base',
+            'font-normal leading-[140%] tracking-[0px] text-text-primary',
+          )}>
+          {info.description}
+        </p>
+      )}
+      {/*<p*/}
+      {/*  className={clsx(*/}
+      {/*    isNews*/}
+      {/*      ? 'line-clamp-2 text-[clamp(1rem,0.971rem+0.128vi,1.125rem)] sm1:line-clamp-3'*/}
+      {/*      : 'line-clamp-2 text-base',*/}
+      {/*    'font-normal leading-[140%] tracking-[0px] text-text-primary',*/}
+      {/*  )}>*/}
+      {/*  {info.description}*/}
+      {/*</p>*/}
+      <div
         className={clsx(
-          isNews
-            ? 'line-clamp-3 text-[clamp(1rem,0.971rem+0.128vi,1.125rem)]'
-            : 'line-clamp-2 text-base',
-          'font-normal leading-[140%] tracking-[0px] text-text-primary',
+          isNews ? 'flex-col-reverse gap-6 sm1:flex-row sm1:gap-0' : 'flex-row',
+          'flex items-end justify-between',
         )}>
-        {info.description}
-      </p>
-      <div className={'flex flex-row items-end justify-between'}>
-        <Button className={'h-[49px] w-auto'}>{texts.readMore}</Button>
-        <div className={'flex flex-row gap-[5px]'}>
-          <EyeIcon className={'size-6'} />
-          <p
-            className={
-              'text-[clamp(1rem,0.971rem+0.128vi,1.125rem)] font-normal leading-[140%] tracking-[0px] text-text-primary'
-            }>
-            {info.views}
-          </p>
-        </div>
-        {isNews && (
+        {!isModal && (
+          <Button
+            onClick={onclick}
+            className={clsx(
+              isNews ? 'w-full sm1:w-auto' : 'w-auto',
+              'h-[49px]',
+            )}>
+            {texts.readMore}
+          </Button>
+        )}
+
+        <div
+          className={clsx(
+            isModal
+              ? 'ml-auto w-full justify-end'
+              : isNews
+                ? 'w-full justify-between sm1:w-auto sm1:justify-end'
+                : '',
+            'w-full justify-end sm1:w-auto',
+            'flex flex-row',
+          )}>
+          {isNews && info?.date && (
+            <div className={'mr-8 flex flex-row gap-[5px]'}>
+              <CalendarIcon className={'size-6'} />
+              <p
+                className={
+                  'text-[clamp(1rem,0.971rem+0.128vi,1.125rem)] font-normal leading-[140%] tracking-[0px] text-text-primary'
+                }>
+                {info.date}
+              </p>
+            </div>
+          )}
           <div className={'flex flex-row gap-[5px]'}>
-            <CalendarIcon className={'size-6'} />
+            <EyeIcon className={'size-6'} />
             <p
               className={
                 'text-[clamp(1rem,0.971rem+0.128vi,1.125rem)] font-normal leading-[140%] tracking-[0px] text-text-primary'
               }>
-              {info.date}
+              {info.views}
             </p>
           </div>
-        )}
+        </div>
       </div>
     </div>
   );
