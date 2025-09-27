@@ -35,7 +35,7 @@ export const CustomModalInfo = ({ info }: Props) => {
       <Dialog.Portal>
         <Dialog.Overlay className="DialogOverlay fixed inset-0 z-40 grid place-items-center overflow-y-auto bg-black/50" />
         <Dialog.Content className="DialogContent no-scrollbar fixed left-1/2 top-0 z-50 h-screen w-full max-w-[1200px] -translate-x-1/2 transform select-none overflow-y-auto px-4 transition focus:outline-none lg:px-0">
-          {' '}
+          <Dialog.Title className="hidden">Modal</Dialog.Title>
           <div
             onClick={() => onOpenChange(false)}
             className={

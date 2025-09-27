@@ -121,8 +121,19 @@
                           'mops';
   }
 }
-body {
-  cursor: url('/paw-cursor.png') 4 4, auto;
+/* Для всех ссылок */
+a {
+  cursor: url('/paw-cursor.png') 4 4, pointer;
+}
+
+/* Для всех кнопок */
+button {
+  cursor: url('/paw-cursor.png') 4 4, pointer;
+}
+
+/* Можно объединить */
+a, button {
+  cursor: url('/paw-cursor.png') 4 4, pointer;
 }
 
 .paw-bounce {

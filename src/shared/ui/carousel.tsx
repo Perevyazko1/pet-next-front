@@ -37,47 +37,47 @@ export const Carousel = ({
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [isVisible, setIsVisible] = useState(false);
 
-  useEffect(() => {
-    if (!autoplay) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsVisible(entry.isIntersecting);
-      },
-      { threshold: 0.3 }, // Начнет работать, когда 30% слайдера окажется в зоне видимости
-    );
+  // useEffect(() => {
+  //   if (!autoplay) return;
+  //   const observer = new IntersectionObserver(
+  //     ([entry]) => {
+  //       setIsVisible(entry.isIntersecting);
+  //     },
+  //     { threshold: 0.3 }, // Начнет работать, когда 30% слайдера окажется в зоне видимости
+  //   );
+  //
+  //   if (containerRef.current) {
+  //     observer.observe(containerRef.current);
+  //   }
+  //
+  //   return () => {
+  //     if (containerRef.current) {
+  //       observer.unobserve(containerRef.current);
+  //     }
+  //   };
+  // }, []);
 
-    if (containerRef.current) {
-      observer.observe(containerRef.current);
-    }
-
-    return () => {
-      if (containerRef.current) {
-        observer.unobserve(containerRef.current);
-      }
-    };
-  }, []);
-
-  useEffect(() => {
-    if (sliderRef.current) {
-      if (isVisible) {
-        sliderRef.current.slickPlay();
-      } else {
-        sliderRef.current.slickPause();
-      }
-    }
-  }, [isVisible]);
+  // useEffect(() => {
+  //   if (sliderRef.current) {
+  //     if (isVisible) {
+  //       sliderRef.current.slickPlay();
+  //     } else {
+  //       sliderRef.current.slickPause();
+  //     }
+  //   }
+  // }, [isVisible]);
 
   const settings = useMemo(() => {
     return {
       dots: false,
       infinite: infinite && length > lengthInfinite,
-      speed: speed ?? 500,
+      speed: 500,
       arrows: false,
       slidesToShow: slidesToShow ? slidesToShow : 5,
       slidesToScroll: 1,
       adaptiveHeight: false,
-      autoplay: length > 3 && autoplay,
-      autoplaySpeed: autoplaySpeed ?? 4000,
+      autoplay: true,
+      autoplaySpeed: 4000,
       draggable: length > 3,
       swipe: length > 3,
       pauseOnHover: false,
