@@ -1,0 +1,12 @@
+
+
+
+
+
+build/
+
+
+
+# Прочее, что не должно попадать в контейнер
+Dockerfile
+docker-compose.yml
