@@ -6,7 +6,7 @@ WORKDIR /app
 COPY package*.json ./
 # Устанавливаем все зависимости (devDependencies включены)
 
-RUN npm ci
+RUN npm ci --force
 
 COPY . .
 # Собираем приложение
@@ -21,7 +21,7 @@ WORKDIR /app
 COPY package*.json ./
 # Устанавливаем только production зависимости
 
-RUN npm ci --production
+RUN npm ci --production --force
 # Копируем собранные файлы Next.js
 COPY --from=builder /app/.next ./.next
 # Копируем статические файлы (если есть)
