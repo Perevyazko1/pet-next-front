@@ -41,7 +41,7 @@ export const SidebarMobile = () => {
   return (
     <header
       className={
-        'relative z-10 h-20 w-screen rounded-lg bg-accent py-6 shadow-2xl'
+        'relative z-10 h-20 w-screen rounded-b-lg bg-accent py-6 shadow-2xl'
       }>
       <h1
         className={cn(
