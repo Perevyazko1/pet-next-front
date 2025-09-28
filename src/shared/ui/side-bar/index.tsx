@@ -15,7 +15,7 @@ export const SideBarCustom = ({ classname }: { classname?: string }) => {
     <div
       className={cn(
         classname,
-        'flex h-full w-full flex-col items-center rounded-lg bg-accent lg:h-[56.313rem] lg:w-[17.5rem]',
+        'flex h-full min-h-[40rem] w-full flex-col items-center rounded-lg bg-accent lg:h-[56.313rem] lg:w-[17.5rem]',
       )}>
       <div
         className={
