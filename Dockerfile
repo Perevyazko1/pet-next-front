@@ -9,6 +9,7 @@ COPY . .
 
 ARG NEXT_PUBLIC_BACKEND_URL=http://localhost:8000
 ENV NEXT_PUBLIC_BACKEND_URL=$NEXT_PUBLIC_BACKEND_URL
+ENV NODE_OPTIONS="--max-old-space-size=2048"
 
 RUN npm run build
 
