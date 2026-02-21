@@ -1,12 +1,10 @@
-
-
-
-
-
-build/
-
-
-
-# Прочее, что не должно попадать в контейнер
+node_modules
+.next
+.git
+.github
+.idea
+build
 Dockerfile
 docker-compose.yml
+.env*
+*.md
