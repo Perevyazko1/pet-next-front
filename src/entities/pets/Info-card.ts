@@ -1,9 +1,10 @@
 export interface InfoCardInterface {
-  id: string;
+  id: number;
   title: string;
   description: string;
   image: string;
-  altImage: string;
+  alt_image: string;
   date?: string;
-  views: number;
+  views?: number;
+  created_at?: string;
 }

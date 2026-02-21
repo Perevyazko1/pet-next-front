@@ -36,7 +36,10 @@ App Router с route groups: `(main)/` содержит страницы `/`, `/p
 
 ### API-слой
 
-Серверный прокси `POST /api/proxy` — принимает `{ url, method, headers, body }`, добавляет Bearer-токен из cookie `access_token` и проксирует запрос к бэкенду (`NEXT_PUBLIC_BACKEND_URL`).
+- **Orval** генерирует React Query хуки и TypeScript-модели из OpenAPI-схемы бэкенда (`http://localhost:8000/api/schema/`)
+- `npm run api:generate` — перегенерация хуков и типов. Сгенерированные файлы в `src/shared/api/` (не редактировать вручную)
+- Кастомный HTTP-клиент `src/shared/lib/api-client.ts` — mutator для Orval, шлёт запросы напрямую к бэкенду с `credentials: 'include'`
+- Конфиг Orval: `orval.config.ts`
 
 ### Стилизация
 

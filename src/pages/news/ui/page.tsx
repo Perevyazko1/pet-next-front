@@ -6,61 +6,48 @@ import { Container } from '@/shared/ui/Container';
 import { InfoCard } from '@/shared/ui/info-card';
 import { useQueryParams } from '@/shared/hooks/useQueryParams';
 import { CustomModalInfo } from '@/shared/ui/custom-modal-info';
+import { useNewsList } from '@/shared/api/news/news';
+import { Spinner } from '@heroui/spinner';
 
 export const NewsPage = () => {
-  const NEWS: InfoCardInterface[] = [
-    {
-      id: '1',
-      description:
-        'Чудесный, молодой Космо ждет свою семью в приюте.\n' +
-        '22 МАЯ в приюте для бездомных животных «ЛАПКА» состоится ДЕНЬ ОТКРЫТЫХ ДВЕРЕЙ!С 11 до 17 часов\n' +
-        'ждём в гости всех старых друзей приюта и будем очень рады новым знакомствам! Если вы мечтаете\n' +
-        'погулять с собакой по весеннему лесу и сделать доброе дело — приезжайте к нам ...',
-      title: 'День открытых дверей',
+  const { data, isLoading } = useNewsList();
+  const news = data?.results ?? [];
 
-      image: '/pictures-news/1.png',
-      altImage: 'img',
-      date: '15.06.23',
-      views: 105,
-    },
-    {
-      id: '2',
-      description:
-        'Чудесный, молодой Космо ждет свою семью в приюте.\n' +
-        '22 МАЯ в приюте для бездомных животных «ЛАПКА» состоится ДЕНЬ ОТКРЫТЫХ ДВЕРЕЙ!С 11 до 17 часов\n' +
-        'ждём в гости всех старых друзей приюта и будем очень рады новым знакомствам! Если вы мечтаете\n' +
-        'погулять с собакой по весеннему лесу и сделать доброе дело — приезжайте к нам ...',
-      title: 'День открытых дверей',
-      altImage: 'img',
-      image: '/pictures-news/1.png',
-      date: '15.06.23',
-      views: 105,
-    },
-  ];
-
-  const [currentNews, setCurrentNews] = useState<InfoCardInterface>(NEWS[0]);
+  const [currentNews, setCurrentNews] = useState<InfoCardInterface | null>(
+    null,
+  );
   const { setInfoId } = useQueryParams();
 
-  const handleClick = (index: number) => {
-    setCurrentNews(NEWS[0]);
-    setInfoId(`${index}`);
+  const handleClick = (newsItem: InfoCardInterface) => {
+    setCurrentNews(newsItem);
+    setInfoId(`${newsItem.id}`);
   };
+
+  if (isLoading) {
+    return (
+      <Container>
+        <div className="flex justify-center py-20">
+          <Spinner size="lg" />
+        </div>
+      </Container>
+    );
+  }
 
   return (
     <>
       <Container>
         <div className={'flex flex-col gap-6 md:gap-10'}>
-          {NEWS.map((newsItem, i) => (
+          {news.map((newsItem) => (
             <InfoCard
               key={newsItem.id}
               info={newsItem}
               isNews
-              onclick={() => handleClick(i)}
+              onclick={() => handleClick(newsItem)}
             />
           ))}
         </div>
       </Container>
-      <CustomModalInfo info={currentNews} />
+      {currentNews && <CustomModalInfo info={currentNews} />}
     </>
   );
 };

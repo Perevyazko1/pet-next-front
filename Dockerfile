@@ -6,6 +6,10 @@ COPY package*.json ./
 RUN npm ci --force
 
 COPY . .
+
+ARG NEXT_PUBLIC_BACKEND_URL=http://localhost:8000
+ENV NEXT_PUBLIC_BACKEND_URL=$NEXT_PUBLIC_BACKEND_URL
+
 RUN npm run build
 
 FROM node:20-alpine

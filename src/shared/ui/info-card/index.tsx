@@ -32,7 +32,7 @@ export const InfoCard = ({
             width={1068}
             height={467}
             src={info.image}
-            alt={info.altImage}
+            alt={info.alt_image}
             className={'h-full w-full object-cover'}
           />
         ) : (
@@ -40,7 +40,7 @@ export const InfoCard = ({
             width={309}
             height={222}
             src={info.image}
-            alt={info.altImage}
+            alt={info.alt_image}
             className={'h-full w-full object-cover'}
           />
         )}
