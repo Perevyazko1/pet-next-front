@@ -1,8 +1,38 @@
 services:
-  nextjs:
-    build: .
-    container_name: nextjs_app
+  db:
+    image: postgres:16-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: ${DB_NAME:-shelter_db}
+      POSTGRES_USER: ${DB_USER:-shelter_user}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-shelter_password}
+    ports:
+      - "5432:5432"
+
+  web:
+    build: ./back
+    ports:
+      - "8000:8000"
+    volumes:
+      - media_data:/app/media
+    env_file:
+      - ./back/.env
+    depends_on:
+      - db
+
+  frontend:
+    build:
+      context: ./front
+      args:
+        NEXT_PUBLIC_BACKEND_URL: http://localhost:8000
     ports:
       - "3000:3000"
     environment:
       - NODE_ENV=production
+    depends_on:
+      - web
+
+volumes:
+  postgres_data:
+  media_data:
