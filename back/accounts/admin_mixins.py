@@ -24,6 +24,26 @@ class ModeratableAdminMixin:
         base = list(super().get_readonly_fields(request, obj))
         return base + [f for f in self.moderation_readonly_fields if f not in base]
 
+    def has_module_permission(self, request):
+        return is_moderator(request.user) or is_shelter(request.user)
+
+    def has_view_permission(self, request, obj=None):
+        if is_moderator(request.user):
+            return True
+        if is_shelter(request.user):
+            return obj is None or obj.shelter == request.user
+        return False
+
+    def has_add_permission(self, request):
+        return is_moderator(request.user) or is_shelter(request.user)
+
+    def has_change_permission(self, request, obj=None):
+        if is_moderator(request.user):
+            return True
+        if is_shelter(request.user):
+            return obj is None or obj.shelter == request.user
+        return False
+
     def get_queryset(self, request):
         qs = super().get_queryset(request)
         if is_moderator(request.user):
