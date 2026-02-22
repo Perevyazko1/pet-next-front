@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 import { SideBarCustom } from '@/shared/ui/side-bar';
 import { SidebarMobile } from '@/shared/ui/side-bar-mobile';
+import { Footer } from '@/shared/ui/footer';
 
 interface Props {
   children?: ReactNode;
@@ -8,17 +9,20 @@ interface Props {
 
 export default async function Layout({ children }: Props) {
   return (
-    <div className="relative mx-auto grid min-h-screen max-w-[1920px] grid-cols-1 bg-white px-5 pt-[6.875rem] md:gap-7 md:px-12 lg:grid-cols-[280px_minmax(0,1518px)] lg:py-10">
-      <div className={'fixed left-0 top-0 z-20 block lg:hidden'}>
-        <SidebarMobile />
-      </div>
-      <div className={'sticky top-10 h-fit'}>
-        <div className={'hidden lg:block'}>
-          <SideBarCustom />
+    <div className="flex min-h-screen flex-col">
+      <div className="relative mx-auto grid w-full max-w-[1920px] flex-1 grid-cols-1 bg-white px-5 pt-[6.875rem] md:gap-7 md:px-12 lg:grid-cols-[280px_minmax(0,1518px)] lg:py-10">
+        <div className={'fixed left-0 top-0 z-20 block lg:hidden'}>
+          <SidebarMobile />
         </div>
-      </div>
+        <div className={'sticky top-10 h-fit'}>
+          <div className={'hidden lg:block'}>
+            <SideBarCustom />
+          </div>
+        </div>
 
-      {children}
+        {children}
+      </div>
+      <Footer />
     </div>
   );
 }

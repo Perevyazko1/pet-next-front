@@ -40,6 +40,17 @@ export const texts = {
   readMore: 'Читать далее...',
   record_subtitle:
     'Заполните форму ниже и наш менеджер свяжется с Вами, чтобы договориться о времени посещения',
+  shelter_application_btn: 'Подключить приют',
+  shelter_application_title: 'Заявка на подключение приюта',
+  shelter_application_subtitle:
+    'Оставьте заявку и мы свяжемся с вами для уточнения деталей',
+  shelter_contact_name: 'Ваше имя',
+  shelter_city: 'Город',
+  shelter_address: 'Адрес приюта',
+  shelter_website: 'Сайт (необязательно)',
+  shelter_comment: 'Комментарий (необязательно)',
+  shelter_success: 'Заявка отправлена!',
+  shelter_success_subtitle: 'Мы свяжемся с вами в ближайшее время.',
   aboutUs: {
     title: 'O нас',
     partOne: '«Лапки»',

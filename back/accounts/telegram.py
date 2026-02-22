@@ -60,3 +60,36 @@ def notify_visit_request(
 
     text = '\n'.join(lines)
     threading.Thread(target=_send, args=(token, chat_id, text), daemon=True).start()
+
+
+def notify_shelter_application(
+    contact_name: str,
+    phone: str,
+    city: str,
+    address: str,
+    email: str = '',
+    website: str = '',
+    comment: str = '',
+) -> None:
+    """Notify about a new shelter connection application. Fire-and-forget."""
+    token = getattr(settings, 'TELEGRAM_SHELTER_BOT_TOKEN', '')
+    chat_id = getattr(settings, 'TELEGRAM_SHELTER_CHAT_ID', '')
+    if not token or not chat_id:
+        return
+
+    lines = [
+        '🏡 <b>Новая заявка на подключение приюта</b>',
+        f'👤 Контакт: {contact_name}',
+        f'📞 Телефон: {phone}',
+        f'🌆 Город: {city}',
+        f'📍 Адрес: {address}',
+    ]
+    if email:
+        lines.append(f'✉️ Email: {email}')
+    if website:
+        lines.append(f'🌐 Сайт: {website}')
+    if comment:
+        lines.append(f'💬 Комментарий: {comment}')
+
+    text = '\n'.join(lines)
+    threading.Thread(target=_send, args=(token, chat_id, text), daemon=True).start()
