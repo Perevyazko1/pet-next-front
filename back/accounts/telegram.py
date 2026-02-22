@@ -36,3 +36,24 @@ def notify_pending(entity_type: str, title: str) -> None:
         f'Название: {title}'
     )
     threading.Thread(target=_send, args=(token, chat_id, text), daemon=True).start()
+
+
+def notify_visit_request(name: str, phone: str, email: str, message: str) -> None:
+    """Notify about a new visit request. Fire-and-forget."""
+    token = getattr(settings, 'TELEGRAM_VISITS_BOT_TOKEN', '')
+    chat_id = getattr(settings, 'TELEGRAM_VISITS_CHAT_ID', '')
+    if not token or not chat_id:
+        return
+
+    lines = [
+        '📋 <b>Новая заявка на посещение</b>',
+        f'👤 Имя: {name}',
+        f'📞 Телефон: {phone}',
+    ]
+    if email:
+        lines.append(f'✉️ Email: {email}')
+    if message:
+        lines.append(f'💬 Сообщение: {message}')
+
+    text = '\n'.join(lines)
+    threading.Thread(target=_send, args=(token, chat_id, text), daemon=True).start()
