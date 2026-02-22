@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.admin.sites import NotRegistered
-from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import User, Group
+from unfold.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
 from .helpers import is_admin, is_moderator
 from .models import Moderator, Shelter

@@ -14,6 +14,9 @@ DEBUG = int(os.getenv('DEBUG', 0))
 ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', 'localhost 127.0.0.1').split()
 
 INSTALLED_APPS = [
+    'unfold',
+    'unfold.contrib.filters',
+    'unfold.contrib.forms',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -111,6 +114,36 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 12,
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+# django-unfold
+UNFOLD = {
+    'SITE_TITLE': 'Лапки',
+    'SITE_HEADER': 'Приют Лапки',
+    'SITE_URL': '/',
+    'COLORS': {
+        'font': {
+            'subtle-light': '107 114 128',
+            'subtle-dark': '156 163 175',
+            'default-light': '75 85 99',
+            'default-dark': '209 213 219',
+            'important-light': '17 24 39',
+            'important-dark': '243 244 246',
+        },
+        'primary': {
+            '50': '240 248 244',
+            '100': '209 235 220',
+            '200': '168 212 187',
+            '300': '119 184 150',
+            '400': '71 150 107',
+            '500': '44 95 66',
+            '600': '36 78 54',
+            '700': '28 60 42',
+            '800': '19 41 29',
+            '900': '10 22 15',
+            '950': '5 11 8',
+        },
+    },
 }
 
 # drf-spectacular

@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.utils.html import format_html
+from unfold.admin import ModelAdmin as UnfoldModelAdmin
 
 from accounts.admin_mixins import ModeratableAdminMixin
 
@@ -7,7 +8,7 @@ from .models import News
 
 
 @admin.register(News)
-class NewsAdmin(ModeratableAdminMixin, admin.ModelAdmin):
+class NewsAdmin(ModeratableAdminMixin, UnfoldModelAdmin):
     list_display = ['id', 'title', 'date', 'views', 'image_preview', 'created_at']
     list_display_links = ['id', 'title']
     search_fields = ['title', 'description']
