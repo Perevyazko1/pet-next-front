@@ -13,6 +13,7 @@ DEBUG = int(os.getenv('DEBUG', 0))
 
 ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', 'localhost 127.0.0.1').split()
 
+
 INSTALLED_APPS = [
     'unfold',
     'unfold.contrib.filters',
