@@ -7,6 +7,7 @@ import { InfoCard } from '@/shared/ui/info-card';
 import { useQueryParams } from '@/shared/hooks/useQueryParams';
 import { CustomModalInfo } from '@/shared/ui/custom-modal-info';
 import { useNewsList } from '@/shared/api/news/news';
+import { trackView } from '@/shared/api/views/trackView';
 import { Spinner } from '@heroui/spinner';
 
 export const NewsPage = () => {
@@ -21,6 +22,7 @@ export const NewsPage = () => {
   const handleClick = (newsItem: InfoCardInterface) => {
     setCurrentNews(newsItem);
     setInfoId(`${newsItem.id}`);
+    trackView('news', newsItem.id);
   };
 
   if (isLoading) {

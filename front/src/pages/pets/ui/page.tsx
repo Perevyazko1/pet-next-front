@@ -7,6 +7,7 @@ import { InfoCard } from '@/shared/ui/info-card';
 import { CustomModalInfo } from '@/shared/ui/custom-modal-info';
 import { useQueryParams } from '@/shared/hooks/useQueryParams';
 import { usePetsList } from '@/shared/api/pets/pets';
+import { trackView } from '@/shared/api/views/trackView';
 import { Spinner } from '@heroui/spinner';
 
 export const PetsPage = () => {
@@ -19,6 +20,7 @@ export const PetsPage = () => {
   const handleClick = (pet: InfoCardInterface) => {
     setCurrentPet(pet);
     setInfoId(`${pet.id}`);
+    trackView('pets', pet.id);
   };
 
   if (isLoading) {
