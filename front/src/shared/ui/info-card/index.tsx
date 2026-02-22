@@ -8,6 +8,11 @@ import { Button } from '@/shared/ui/button';
 import { texts } from '@/shared/constants/texts';
 import { EyeIcon } from '@/shared/ui/icons/EyeIcon';
 import { CalendarIcon } from '@/shared/ui/icons/CalendarIcon';
+
+const formatDate = (dateStr: string): string => {
+  const [year, month, day] = dateStr.split('-');
+  return `${day}.${month}.${year}`;
+};
 interface Props {
   info: InfoCardInterface;
   isNews?: boolean;
@@ -39,14 +44,19 @@ export const InfoCard = ({
           }
           quality={90}
         />
-        {isModal && (
+        {/* Новости: заголовок только в модалке */}
+        {isNews && isModal && (
           <p
-            className={clsx(
-              isNews
-                ? 'bottom-5 left-5 text-[clamp(1.125rem,0.923rem+0.897vi,2rem)]'
-                : 'bottom-4 left-4 text-[clamp(1.125rem,1.038rem+0.385vi,1.5rem)]',
-              'absolute font-black leading-[160%] tracking-[0px] text-white underline',
-            )}>{`#${info.title}`}</p>
+            className={
+              'absolute bottom-5 left-5 text-[clamp(1.125rem,0.923rem+0.897vi,2rem)] font-black leading-[160%] tracking-[0px] text-white underline'
+            }>{`#${info.title}`}</p>
+        )}
+        {/* Питомцы: "В приюте с DD.MM.YYYY" поверх фото */}
+        {!isNews && info?.shelter_since && (
+          <p
+            className={
+              'absolute bottom-4 left-4 text-[clamp(1.125rem,1.038rem+0.385vi,1.5rem)] font-black leading-[160%] tracking-[0px] text-white underline'
+            }>{`#В приюте с ${formatDate(info.shelter_since)}`}</p>
         )}
       </div>
       {isModal ? (
@@ -113,17 +123,6 @@ export const InfoCard = ({
                   'text-[clamp(1rem,0.971rem+0.128vi,1.125rem)] font-normal leading-[140%] tracking-[0px] text-text-primary'
                 }>
                 {info.date}
-              </p>
-            </div>
-          )}
-          {!isNews && info?.shelter_since && (
-            <div className={'mr-8 flex flex-row gap-[5px]'}>
-              <CalendarIcon className={'size-6'} />
-              <p
-                className={
-                  'text-[clamp(1rem,0.971rem+0.128vi,1.125rem)] font-normal leading-[140%] tracking-[0px] text-text-primary'
-                }>
-                {'В приюте с ' + info.shelter_since}
               </p>
             </div>
           )}
