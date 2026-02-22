@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Container } from '@/shared/ui/Container';
 import { texts } from '@/shared/constants/texts';
@@ -16,6 +16,7 @@ import { Select, SelectItem } from '@heroui/select';
 import { Carousel } from '@/shared/ui/carousel';
 import { routes } from '@/app/routes';
 import { useSheltersList } from '@/shared/api/shelters/shelters';
+import { useVisitsCreate } from '@/shared/api/visits/visits';
 
 const inputClassNames = {
   inputWrapper: [
@@ -44,9 +45,47 @@ const CAROUSEL_PHOTO = [
 export const HomePage = () => {
   const router = useRouter();
   const { data: shelters = [] } = useSheltersList();
+  const { mutate: createVisit, isPending } = useVisitsCreate();
+
+  const [visitForm, setVisitForm] = useState({
+    name: '',
+    phone: '',
+    email: '',
+    shelterId: '',
+  });
+  const [visitErrors, setVisitErrors] = useState<Record<string, string>>({});
+  const [visitSuccess, setVisitSuccess] = useState(false);
 
   const scrollToDonates = () => {
     document.getElementById('donates')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const handleVisitSubmit = () => {
+    const errors: Record<string, string> = {};
+    if (!visitForm.name.trim()) errors.name = 'Введите имя';
+    if (!visitForm.phone.trim()) errors.phone = 'Введите телефон';
+    if (Object.keys(errors).length) {
+      setVisitErrors(errors);
+      return;
+    }
+    setVisitErrors({});
+
+    createVisit(
+      {
+        data: {
+          name: visitForm.name,
+          phone: visitForm.phone,
+          email: visitForm.email || undefined,
+          ...(visitForm.shelterId && { shelter: Number(visitForm.shelterId) }),
+        } as never,
+      },
+      {
+        onSuccess: () => {
+          setVisitSuccess(true);
+          setVisitForm({ name: '', phone: '', email: '', shelterId: '' });
+        },
+      },
+    );
   };
 
   return (
@@ -198,63 +237,81 @@ export const HomePage = () => {
               }>
               {texts.record_subtitle}
             </p>
-            <div
-              className={
-                'mt-6 flex flex-col flex-wrap items-center gap-7 px-10 md:mb-16 md:mt-0 md:max-w-[80%] md:flex-row md:items-baseline md:px-0 lg1:max-w-[60%]'
-              }>
-              <Input
-                className="h-[44px] w-full md:h-[46px] md:w-[210px]"
-                classNames={inputClassNames}
-                // value={fullName}
-                placeholder={texts.yor_name}
-                // onChange={(e) =>
-                //   onChangeHandler(e.target.value, 'fullName', setFullName)
-                // }
-                // isInvalid={!!errors.fullName}
-                // isDisabled={!isEditMode}
-              />
-              <Input
-                className="h-[44px] w-full md:h-[46px] md:w-[210px]"
-                classNames={inputClassNames}
-                // value={fullName}
-                placeholder={texts.yor_phone}
-                // onChange={(e) =>
-                //   onChangeHandler(e.target.value, 'fullName', setFullName)
-                // }
-                // isInvalid={!!errors.fullName}
-                // isDisabled={!isEditMode}
-              />
-              <Input
-                className="h-[44px] w-full md:h-[46px] md:w-[210px]"
-                classNames={inputClassNames}
-                // value={fullName}
-                placeholder={texts.yor_email}
-                // onChange={(e) =>
-                //   onChangeHandler(e.target.value, 'fullName', setFullName)
-                // }
-                // isInvalid={!!errors.fullName}
-                // isDisabled={!isEditMode}
-              />{' '}
-              <Select
-                className="h-[44px] w-full md:h-[46px] md:w-[210px]"
-                classNames={{
-                  trigger: [
-                    '!px-6 !py-3 !rounded-lg !bg-white !h-full',
-                    'border-outline-primary border-b',
-                    'shadow-none',
-                  ],
-                  value: '!text-black !font-normal',
-                }}
-                placeholder={texts.shelters}
-                aria-label={texts.shelters}>
-                {shelters.map((shelter) => (
-                  <SelectItem key={shelter.id}>{shelter.name}</SelectItem>
-                ))}
-              </Select>
-              <Button className={'h-[49px] w-[140px] md:h-[46px] md:w-auto'}>
-                {texts.send}
-              </Button>
-            </div>
+            {visitSuccess ? (
+              <p
+                className={
+                  'mt-6 px-10 text-center text-lg font-medium text-primary md:px-0'
+                }>
+                Заявка отправлена! Мы свяжемся с вами в ближайшее время.
+              </p>
+            ) : (
+              <div
+                className={
+                  'mt-6 flex flex-col flex-wrap items-center gap-7 px-10 md:mb-16 md:mt-0 md:max-w-[80%] md:flex-row md:items-baseline md:px-0 lg1:max-w-[60%]'
+                }>
+                <Input
+                  className="h-[44px] w-full md:h-[46px] md:w-[210px]"
+                  classNames={inputClassNames}
+                  value={visitForm.name}
+                  placeholder={texts.yor_name}
+                  isInvalid={!!visitErrors.name}
+                  onChange={(e) =>
+                    setVisitForm((f) => ({ ...f, name: e.target.value }))
+                  }
+                />
+                <Input
+                  className="h-[44px] w-full md:h-[46px] md:w-[210px]"
+                  classNames={inputClassNames}
+                  value={visitForm.phone}
+                  placeholder={texts.yor_phone}
+                  isInvalid={!!visitErrors.phone}
+                  onChange={(e) =>
+                    setVisitForm((f) => ({ ...f, phone: e.target.value }))
+                  }
+                />
+                <Input
+                  className="h-[44px] w-full md:h-[46px] md:w-[210px]"
+                  classNames={inputClassNames}
+                  value={visitForm.email}
+                  placeholder={texts.yor_email}
+                  onChange={(e) =>
+                    setVisitForm((f) => ({ ...f, email: e.target.value }))
+                  }
+                />
+                <Select
+                  className="h-[44px] w-full md:h-[46px] md:w-[210px]"
+                  classNames={{
+                    trigger: [
+                      '!px-6 !py-3 !rounded-lg !bg-white !h-full',
+                      'border-outline-primary border-b',
+                      'shadow-none',
+                    ],
+                    value: '!text-black !font-normal',
+                  }}
+                  placeholder={texts.shelters}
+                  aria-label={texts.shelters}
+                  selectedKeys={
+                    visitForm.shelterId ? [visitForm.shelterId] : []
+                  }
+                  onSelectionChange={(keys) => {
+                    const key = Array.from(keys)[0];
+                    setVisitForm((f) => ({
+                      ...f,
+                      shelterId: key ? String(key) : '',
+                    }));
+                  }}>
+                  {shelters.map((shelter) => (
+                    <SelectItem key={shelter.id}>{shelter.name}</SelectItem>
+                  ))}
+                </Select>
+                <Button
+                  className={'h-[49px] w-[140px] md:h-[46px] md:w-auto'}
+                  onClick={handleVisitSubmit}
+                  disabled={isPending}>
+                  {isPending ? 'Отправка...' : texts.send}
+                </Button>
+              </div>
+            )}
             <div
               className={
                 'relative bottom-0 right-0 aspect-[319/187] w-full md:absolute md:-bottom-2 md:aspect-[474/188] md:w-[37%]'
