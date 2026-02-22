@@ -13,10 +13,12 @@ import { cn } from '@/shared/lib';
 import { airfool } from '@/shared/config/fonts';
 import { Input } from '@heroui/input';
 import { Select, SelectItem } from '@heroui/select';
+import * as Dialog from '@radix-ui/react-dialog';
 import { Carousel } from '@/shared/ui/carousel';
 import { routes } from '@/app/routes';
 import { useSheltersList } from '@/shared/api/shelters/shelters';
 import { useVisitsCreate } from '@/shared/api/visits/visits';
+import { IconCross } from '@/shared/ui/icons/IconCross';
 
 const inputClassNames = {
   inputWrapper: [
@@ -32,6 +34,25 @@ const inputClassNames = {
   input:
     '!text-black !font-normal placeholder:text-[#121212B2] placeholder:text-base',
 };
+
+const formatPhone = (raw: string): string => {
+  const digits = raw.replace(/\D/g, '');
+  const body = digits.startsWith('7') || digits.startsWith('8')
+    ? digits.slice(1)
+    : digits;
+  const d = body.slice(0, 10);
+  if (!d) return '';
+  let result = '+7 (' + d.slice(0, 3);
+  if (d.length <= 3) return result;
+  result += ') ' + d.slice(3, 6);
+  if (d.length <= 6) return result;
+  result += '-' + d.slice(6, 8);
+  if (d.length <= 8) return result;
+  return result + '-' + d.slice(8, 10);
+};
+
+const isValidEmail = (email: string) =>
+  /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
 const CAROUSEL_PHOTO = [
   { id: 0, url: '/carousel/1.png' },
@@ -54,7 +75,7 @@ export const HomePage = () => {
     shelterId: '',
   });
   const [visitErrors, setVisitErrors] = useState<Record<string, string>>({});
-  const [visitSuccess, setVisitSuccess] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   const scrollToDonates = () => {
     document.getElementById('donates')?.scrollIntoView({ behavior: 'smooth' });
@@ -63,7 +84,15 @@ export const HomePage = () => {
   const handleVisitSubmit = () => {
     const errors: Record<string, string> = {};
     if (!visitForm.name.trim()) errors.name = 'Введите имя';
-    if (!visitForm.phone.trim()) errors.phone = 'Введите телефон';
+    const phoneDigits = visitForm.phone.replace(/\D/g, '');
+    if (!visitForm.phone) {
+      errors.phone = 'Введите телефон';
+    } else if (phoneDigits.length < 11) {
+      errors.phone = 'Введите полный номер телефона';
+    }
+    if (visitForm.email && !isValidEmail(visitForm.email)) {
+      errors.email = 'Некорректный email';
+    }
     if (Object.keys(errors).length) {
       setVisitErrors(errors);
       return;
@@ -81,7 +110,7 @@ export const HomePage = () => {
       },
       {
         onSuccess: () => {
-          setVisitSuccess(true);
+          setShowSuccessModal(true);
           setVisitForm({ name: '', phone: '', email: '', shelterId: '' });
         },
       },
@@ -237,81 +266,120 @@ export const HomePage = () => {
               }>
               {texts.record_subtitle}
             </p>
-            {visitSuccess ? (
-              <p
-                className={
-                  'mt-6 px-10 text-center text-lg font-medium text-primary md:px-0'
-                }>
-                Заявка отправлена! Мы свяжемся с вами в ближайшее время.
-              </p>
-            ) : (
-              <div
-                className={
-                  'mt-6 flex flex-col flex-wrap items-center gap-7 px-10 md:mb-16 md:mt-0 md:max-w-[80%] md:flex-row md:items-baseline md:px-0 lg1:max-w-[60%]'
-                }>
-                <Input
-                  className="h-[44px] w-full md:h-[46px] md:w-[210px]"
-                  classNames={inputClassNames}
-                  value={visitForm.name}
-                  placeholder={texts.yor_name}
-                  isInvalid={!!visitErrors.name}
-                  onChange={(e) =>
-                    setVisitForm((f) => ({ ...f, name: e.target.value }))
-                  }
-                />
-                <Input
-                  className="h-[44px] w-full md:h-[46px] md:w-[210px]"
-                  classNames={inputClassNames}
-                  value={visitForm.phone}
-                  placeholder={texts.yor_phone}
-                  isInvalid={!!visitErrors.phone}
-                  onChange={(e) =>
-                    setVisitForm((f) => ({ ...f, phone: e.target.value }))
-                  }
-                />
-                <Input
-                  className="h-[44px] w-full md:h-[46px] md:w-[210px]"
-                  classNames={inputClassNames}
-                  value={visitForm.email}
-                  placeholder={texts.yor_email}
-                  onChange={(e) =>
-                    setVisitForm((f) => ({ ...f, email: e.target.value }))
-                  }
-                />
-                <Select
-                  className="h-[44px] w-full md:h-[46px] md:w-[210px]"
-                  classNames={{
-                    trigger: [
-                      '!px-6 !py-3 !rounded-lg !bg-white !h-full',
-                      'border-outline-primary border-b',
-                      'shadow-none',
-                    ],
-                    value: '!text-black !font-normal',
-                  }}
-                  placeholder={texts.shelters}
-                  aria-label={texts.shelters}
-                  selectedKeys={
-                    visitForm.shelterId ? [visitForm.shelterId] : []
-                  }
-                  onSelectionChange={(keys) => {
-                    const key = Array.from(keys)[0];
-                    setVisitForm((f) => ({
-                      ...f,
-                      shelterId: key ? String(key) : '',
-                    }));
-                  }}>
-                  {shelters.map((shelter) => (
-                    <SelectItem key={shelter.id}>{shelter.name}</SelectItem>
-                  ))}
-                </Select>
-                <Button
-                  className={'h-[49px] w-[140px] md:h-[46px] md:w-auto'}
-                  onClick={handleVisitSubmit}
-                  disabled={isPending}>
-                  {isPending ? 'Отправка...' : texts.send}
-                </Button>
-              </div>
-            )}
+            <div
+              className={
+                'mt-6 flex flex-col flex-wrap items-center gap-7 px-10 md:mb-16 md:mt-0 md:max-w-[80%] md:flex-row md:items-baseline md:px-0 lg1:max-w-[60%]'
+              }>
+              <Input
+                className="h-[44px] w-full md:h-[46px] md:w-[210px]"
+                classNames={inputClassNames}
+                value={visitForm.name}
+                placeholder={texts.yor_name}
+                isInvalid={!!visitErrors.name}
+                onChange={(e) =>
+                  setVisitForm((f) => ({ ...f, name: e.target.value }))
+                }
+              />
+              <Input
+                className="h-[44px] w-full md:h-[46px] md:w-[210px]"
+                classNames={inputClassNames}
+                value={visitForm.phone}
+                placeholder={texts.yor_phone}
+                isInvalid={!!visitErrors.phone}
+                onChange={(e) =>
+                  setVisitForm((f) => ({
+                    ...f,
+                    phone: formatPhone(e.target.value),
+                  }))
+                }
+              />
+              <Input
+                className="h-[44px] w-full md:h-[46px] md:w-[210px]"
+                classNames={inputClassNames}
+                value={visitForm.email}
+                placeholder={texts.yor_email}
+                isInvalid={!!visitErrors.email}
+                onChange={(e) =>
+                  setVisitForm((f) => ({ ...f, email: e.target.value }))
+                }
+              />
+              <Select
+                className="h-[44px] w-full md:h-[46px] md:w-[210px]"
+                classNames={{
+                  trigger: [
+                    '!px-6 !py-3 !rounded-lg !bg-white !h-full',
+                    'border-outline-primary border-b',
+                    'shadow-none',
+                  ],
+                  value: '!text-black !font-normal',
+                }}
+                placeholder={texts.shelters}
+                aria-label={texts.shelters}
+                selectedKeys={visitForm.shelterId ? [visitForm.shelterId] : []}
+                onSelectionChange={(keys) => {
+                  const key = Array.from(keys)[0];
+                  setVisitForm((f) => ({
+                    ...f,
+                    shelterId: key ? String(key) : '',
+                  }));
+                }}>
+                {shelters.map((shelter) => (
+                  <SelectItem key={shelter.id}>{shelter.name}</SelectItem>
+                ))}
+              </Select>
+              <Button
+                className={'h-[49px] w-[140px] md:h-[46px] md:w-auto'}
+                onClick={handleVisitSubmit}
+                disabled={isPending}>
+                {isPending ? 'Отправка...' : texts.send}
+              </Button>
+            </div>
+
+            <Dialog.Root
+              open={showSuccessModal}
+              onOpenChange={setShowSuccessModal}>
+              <Dialog.Portal>
+                <Dialog.Overlay className="fixed inset-0 z-40 bg-black/50" />
+                <Dialog.Content className="fixed left-1/2 top-1/2 z-50 w-full max-w-sm -translate-x-1/2 -translate-y-1/2 rounded-2xl bg-white p-8 shadow-xl focus:outline-none">
+                  <Dialog.Title className="hidden">Успешно</Dialog.Title>
+                  <Dialog.Description className="hidden">
+                    Заявка отправлена
+                  </Dialog.Description>
+                  <button
+                    onClick={() => setShowSuccessModal(false)}
+                    className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full bg-accent transition hover:bg-accent/70">
+                    <IconCross className="h-4 w-4 fill-primary" />
+                  </button>
+                  <div className="flex flex-col items-center gap-4 text-center">
+                    <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
+                      <svg
+                        className="h-8 w-8 text-primary"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth={2}>
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M5 13l4 4L19 7"
+                        />
+                      </svg>
+                    </div>
+                    <p className="text-xl font-bold text-black">
+                      Заявка отправлена!
+                    </p>
+                    <p className="text-text-secondary">
+                      Мы свяжемся с вами в ближайшее время.
+                    </p>
+                    <Button
+                      className="mt-2 w-full"
+                      onClick={() => setShowSuccessModal(false)}>
+                      Закрыть
+                    </Button>
+                  </div>
+                </Dialog.Content>
+              </Dialog.Portal>
+            </Dialog.Root>
             <div
               className={
                 'relative bottom-0 right-0 aspect-[319/187] w-full md:absolute md:-bottom-2 md:aspect-[474/188] md:w-[37%]'
