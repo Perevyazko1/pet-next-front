@@ -1,17 +1,19 @@
 from django.db.models import F
 from rest_framework import generics
 
+from accounts.mixins import ModerationStatus
+
 from .models import Pet
 from .serializers import PetDetailSerializer, PetListSerializer
 
 
 class PetListView(generics.ListAPIView):
-    queryset = Pet.objects.all()
+    queryset = Pet.objects.filter(status=ModerationStatus.APPROVED)
     serializer_class = PetListSerializer
 
 
 class PetDetailView(generics.RetrieveAPIView):
-    queryset = Pet.objects.all()
+    queryset = Pet.objects.filter(status=ModerationStatus.APPROVED)
     serializer_class = PetDetailSerializer
 
     def retrieve(self, request, *args, **kwargs):

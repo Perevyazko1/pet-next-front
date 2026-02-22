@@ -1,11 +1,13 @@
 from django.contrib import admin
 from django.utils.html import format_html
 
+from accounts.admin_mixins import ModeratableAdminMixin
+
 from .models import News
 
 
 @admin.register(News)
-class NewsAdmin(admin.ModelAdmin):
+class NewsAdmin(ModeratableAdminMixin, admin.ModelAdmin):
     list_display = ['id', 'title', 'date', 'views', 'image_preview', 'created_at']
     list_display_links = ['id', 'title']
     search_fields = ['title', 'description']

@@ -1,17 +1,19 @@
 from django.db.models import F
 from rest_framework import generics
 
+from accounts.mixins import ModerationStatus
+
 from .models import News
 from .serializers import NewsDetailSerializer, NewsListSerializer
 
 
 class NewsListView(generics.ListAPIView):
-    queryset = News.objects.all()
+    queryset = News.objects.filter(status=ModerationStatus.APPROVED)
     serializer_class = NewsListSerializer
 
 
 class NewsDetailView(generics.RetrieveAPIView):
-    queryset = News.objects.all()
+    queryset = News.objects.filter(status=ModerationStatus.APPROVED)
     serializer_class = NewsDetailSerializer
 
     def retrieve(self, request, *args, **kwargs):

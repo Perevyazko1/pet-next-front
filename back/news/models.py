@@ -1,7 +1,9 @@
 from django.db import models
 
+from accounts.mixins import ModeratableMixin
 
-class News(models.Model):
+
+class News(ModeratableMixin, models.Model):
     title = models.CharField('Заголовок', max_length=255)
     description = models.TextField('Описание')
     image = models.ImageField('Фото', upload_to='news/')

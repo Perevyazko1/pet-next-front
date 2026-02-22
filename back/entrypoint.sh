@@ -10,6 +10,9 @@ echo "PostgreSQL is ready."
 echo "Running migrations..."
 python manage.py migrate --noinput
 
+echo "Setting up roles..."
+python manage.py setup_roles
+
 echo "Collecting static files..."
 python manage.py collectstatic --noinput
 

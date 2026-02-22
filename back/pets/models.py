@@ -1,7 +1,9 @@
 from django.db import models
 
+from accounts.mixins import ModeratableMixin
 
-class Pet(models.Model):
+
+class Pet(ModeratableMixin, models.Model):
     title = models.CharField('Имя', max_length=255)
     description = models.TextField('Описание')
     image = models.ImageField('Фото', upload_to='pets/')

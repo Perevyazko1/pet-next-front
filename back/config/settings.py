@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     'drf_spectacular',
     'corsheaders',
     # Local
+    'accounts',
     'pets',
     'news',
     'contacts',
@@ -95,6 +96,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # CORS
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = os.getenv('CORS_ALLOWED_ORIGINS', 'http://localhost:3000').split()
+
+# CSRF
+CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS', 'http://localhost:8000').split()
+
+# Proxy headers
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # DRF
 REST_FRAMEWORK = {
