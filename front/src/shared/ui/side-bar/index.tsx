@@ -9,6 +9,7 @@ import { airfool } from '@/shared/config/fonts';
 import { BigPawIcon } from '@/shared/ui/icons/BigPawIcon';
 import { LinkButton } from '@/shared/ui/link-button';
 import { routes } from '@/app/routes';
+import { ShelterApplicationDialog } from '@/shared/ui/shelter-application-dialog';
 
 export const SideBarCustom = ({ classname }: { classname?: string }) => {
   return (
@@ -73,6 +74,7 @@ export const SideBarCustom = ({ classname }: { classname?: string }) => {
           }>
           {texts.weAreWaitingForYouEveryDay}
         </p>
+        <ShelterApplicationDialog />
       </div>
     </div>
   );
