@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { useRouter } from 'next/navigation';
 import { Container } from '@/shared/ui/Container';
 import { texts } from '@/shared/constants/texts';
 import { Button } from '@/shared/ui/button';
@@ -11,7 +12,10 @@ import Image from 'next/image';
 import { cn } from '@/shared/lib';
 import { airfool } from '@/shared/config/fonts';
 import { Input } from '@heroui/input';
+import { Select, SelectItem } from '@heroui/select';
 import { Carousel } from '@/shared/ui/carousel';
+import { routes } from '@/app/routes';
+import { useSheltersList } from '@/shared/api/shelters/shelters';
 
 const inputClassNames = {
   inputWrapper: [
@@ -38,6 +42,13 @@ const CAROUSEL_PHOTO = [
 ];
 
 export const HomePage = () => {
+  const router = useRouter();
+  const { data: shelters = [] } = useSheltersList();
+
+  const scrollToDonates = () => {
+    document.getElementById('donates')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <>
       <Container>
@@ -89,8 +100,8 @@ export const HomePage = () => {
                 className={
                   'flex w-full flex-col gap-x-6 gap-y-[1.5rem] md:w-fit md:flex-row md:gap-y-[1.875rem]'
                 }>
-                <Button>{texts.shelter}</Button>
-                <Button>{texts.donate}</Button>
+                <Button onClick={() => router.push(routes.pets)}>{texts.shelter}</Button>
+                <Button onClick={scrollToDonates}>{texts.donate}</Button>
               </div>
             </div>
 
@@ -224,17 +235,22 @@ export const HomePage = () => {
                 // isInvalid={!!errors.fullName}
                 // isDisabled={!isEditMode}
               />{' '}
-              <Input
+              <Select
                 className="h-[44px] w-full md:h-[46px] md:w-[210px]"
-                classNames={inputClassNames}
-                // value={fullName}
+                classNames={{
+                  trigger: [
+                    '!px-6 !py-3 !rounded-lg !bg-white !h-full',
+                    'border-outline-primary border-b',
+                    'shadow-none',
+                  ],
+                  value: '!text-black !font-normal',
+                }}
                 placeholder={texts.shelters}
-                // onChange={(e) =>
-                //   onChangeHandler(e.target.value, 'fullName', setFullName)
-                // }
-                // isInvalid={!!errors.fullName}
-                // isDisabled={!isEditMode}
-              />
+                aria-label={texts.shelters}>
+                {shelters.map((shelter) => (
+                  <SelectItem key={shelter.id}>{shelter.name}</SelectItem>
+                ))}
+              </Select>
               <Button className={'h-[49px] w-[140px] md:h-[46px] md:w-auto'}>
                 {texts.send}
               </Button>
@@ -407,11 +423,13 @@ export const HomePage = () => {
             <Button
               className={
                 'mx-auto mb-14 mt-9 h-[49px] w-full md:mt-6 md:w-[134px]'
-              }>
+              }
+              onClick={() => router.push(routes.pets)}>
               {texts.shelter}
             </Button>
           </div>
           <div
+            id="donates"
             className={
               'donates-block relative grid grid-cols-1 rounded-lg bg-accent md:aspect-[1518/624] md:grid-cols-2 md:pl-12 md:pr-0'
             }>
