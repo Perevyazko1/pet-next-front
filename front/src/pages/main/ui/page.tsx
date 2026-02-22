@@ -9,7 +9,7 @@ import { BigBoneIcon } from '@/shared/ui/icons/BigBoneIcon';
 import { MiniBoneIcon } from '@/shared/ui/icons/MiniBoneIcon';
 import { BigPawIcon } from '@/shared/ui/icons/BigPawIcon';
 import Image from 'next/image';
-import { cn } from '@/shared/lib';
+import { cn, formatPhone } from '@/shared/lib';
 import { airfool } from '@/shared/config/fonts';
 import { Input } from '@heroui/input';
 import { Select, SelectItem } from '@heroui/select';
@@ -35,21 +35,6 @@ const inputClassNames = {
     '!text-black !font-normal placeholder:text-[#121212B2] placeholder:text-base',
 };
 
-const formatPhone = (raw: string): string => {
-  const digits = raw.replace(/\D/g, '');
-  const body = digits.startsWith('7') || digits.startsWith('8')
-    ? digits.slice(1)
-    : digits;
-  const d = body.slice(0, 10);
-  if (!d) return '';
-  let result = '+7 (' + d.slice(0, 3);
-  if (d.length <= 3) return result;
-  result += ') ' + d.slice(3, 6);
-  if (d.length <= 6) return result;
-  result += '-' + d.slice(6, 8);
-  if (d.length <= 8) return result;
-  return result + '-' + d.slice(8, 10);
-};
 
 const isValidEmail = (email: string) =>
   /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);

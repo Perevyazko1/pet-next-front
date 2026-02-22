@@ -6,6 +6,7 @@ import * as Dialog from '@radix-ui/react-dialog';
 
 import { texts } from '@/shared/constants/texts';
 import { apiClient } from '@/shared/lib/api-client';
+import { formatPhone } from '@/shared/lib';
 import { Input } from '@heroui/input';
 import { Button } from '@/shared/ui/button';
 import { IconCross } from '@/shared/ui/icons/IconCross';
@@ -183,7 +184,10 @@ export const ShelterApplicationDialog = () => {
                     isInvalid={!!errors.phone}
                     errorMessage={errors.phone}
                     onChange={(e) => {
-                      setForm((f) => ({ ...f, phone: e.target.value }));
+                      setForm((f) => ({
+                        ...f,
+                        phone: formatPhone(e.target.value),
+                      }));
                       clearError('phone');
                     }}
                   />
