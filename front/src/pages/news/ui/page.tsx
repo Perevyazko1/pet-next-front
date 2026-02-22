@@ -8,7 +8,7 @@ import { useQueryParams } from '@/shared/hooks/useQueryParams';
 import { CustomModalInfo } from '@/shared/ui/custom-modal-info';
 import { useNewsList } from '@/shared/api/news/news';
 import { trackView } from '@/shared/api/views/trackView';
-import { Spinner } from '@heroui/spinner';
+import { InfoCardSkeleton } from '@/shared/ui/info-card/skeleton';
 
 export const NewsPage = () => {
   const { data, isLoading } = useNewsList();
@@ -28,8 +28,10 @@ export const NewsPage = () => {
   if (isLoading) {
     return (
       <Container>
-        <div className="flex justify-center py-20">
-          <Spinner size="lg" />
+        <div className="flex flex-col gap-6 md:gap-10">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <InfoCardSkeleton key={i} isNews />
+          ))}
         </div>
       </Container>
     );

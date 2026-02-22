@@ -1,9 +1,10 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { InfoCardInterface } from '@/entities/pets/Info-card';
 import Image from 'next/image';
 import { clsx } from 'clsx';
+import { Skeleton } from '@heroui/skeleton';
 import { Button } from '@/shared/ui/button';
 import { texts } from '@/shared/constants/texts';
 import { EyeIcon } from '@/shared/ui/icons/EyeIcon';
@@ -25,6 +26,8 @@ export const InfoCard = ({
   isNews = false,
   isModal = false,
 }: Props) => {
+  const [imageLoaded, setImageLoaded] = useState(false);
+
   return (
     <div className={'flex flex-col gap-5 rounded-lg bg-accent p-4 md:p-5'}>
       <div
@@ -32,6 +35,9 @@ export const InfoCard = ({
           isNews ? 'aspect-[1068/467]' : 'aspect-[309/222]',
           'relative overflow-hidden rounded-lg',
         )}>
+        {!imageLoaded && (
+          <Skeleton className="absolute inset-0 z-10 rounded-lg" />
+        )}
         <Image
           fill
           src={info.image}
@@ -43,6 +49,7 @@ export const InfoCard = ({
               : '(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 33vw'
           }
           quality={90}
+          onLoad={() => setImageLoaded(true)}
         />
         {/* Новости: заголовок только в модалке */}
         {isNews && isModal && (

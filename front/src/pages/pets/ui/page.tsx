@@ -8,7 +8,7 @@ import { CustomModalInfo } from '@/shared/ui/custom-modal-info';
 import { useQueryParams } from '@/shared/hooks/useQueryParams';
 import { usePetsList } from '@/shared/api/pets/pets';
 import { trackView } from '@/shared/api/views/trackView';
-import { Spinner } from '@heroui/spinner';
+import { InfoCardSkeleton } from '@/shared/ui/info-card/skeleton';
 
 export const PetsPage = () => {
   const { data, isLoading } = usePetsList();
@@ -26,8 +26,10 @@ export const PetsPage = () => {
   if (isLoading) {
     return (
       <Container>
-        <div className="flex justify-center py-20">
-          <Spinner size="lg" />
+        <div className="grid grid-cols-1 gap-7 sm1:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {Array.from({ length: 8 }).map((_, i) => (
+            <InfoCardSkeleton key={i} />
+          ))}
         </div>
       </Container>
     );
