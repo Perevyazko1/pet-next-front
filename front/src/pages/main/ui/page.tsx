@@ -276,9 +276,12 @@ export const HomePage = () => {
                 value={visitForm.name}
                 placeholder={texts.yor_name}
                 isInvalid={!!visitErrors.name}
-                onChange={(e) =>
-                  setVisitForm((f) => ({ ...f, name: e.target.value }))
-                }
+                errorMessage={visitErrors.name}
+                onChange={(e) => {
+                  setVisitForm((f) => ({ ...f, name: e.target.value }));
+                  if (visitErrors.name)
+                    setVisitErrors((err) => ({ ...err, name: '' }));
+                }}
               />
               <Input
                 className="h-[44px] w-full md:h-[46px] md:w-[210px]"
@@ -286,12 +289,15 @@ export const HomePage = () => {
                 value={visitForm.phone}
                 placeholder={texts.yor_phone}
                 isInvalid={!!visitErrors.phone}
-                onChange={(e) =>
+                errorMessage={visitErrors.phone}
+                onChange={(e) => {
                   setVisitForm((f) => ({
                     ...f,
                     phone: formatPhone(e.target.value),
-                  }))
-                }
+                  }));
+                  if (visitErrors.phone)
+                    setVisitErrors((err) => ({ ...err, phone: '' }));
+                }}
               />
               <Input
                 className="h-[44px] w-full md:h-[46px] md:w-[210px]"
@@ -299,9 +305,12 @@ export const HomePage = () => {
                 value={visitForm.email}
                 placeholder={texts.yor_email}
                 isInvalid={!!visitErrors.email}
-                onChange={(e) =>
-                  setVisitForm((f) => ({ ...f, email: e.target.value }))
-                }
+                errorMessage={visitErrors.email}
+                onChange={(e) => {
+                  setVisitForm((f) => ({ ...f, email: e.target.value }));
+                  if (visitErrors.email)
+                    setVisitErrors((err) => ({ ...err, email: '' }));
+                }}
               />
               <Select
                 className="h-[44px] w-full md:h-[46px] md:w-[210px]"
