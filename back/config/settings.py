@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     'drf_spectacular',
     'corsheaders',
     # Local
+    'accounts',
     'pets',
     'news',
     'contacts',
