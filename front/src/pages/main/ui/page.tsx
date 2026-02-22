@@ -306,6 +306,7 @@ export const HomePage = () => {
                     'shadow-none',
                   ],
                   value: '!text-black !font-normal',
+                  popoverContent: '!bg-white !rounded-lg shadow-md',
                 }}
                 placeholder={texts.shelters}
                 aria-label={texts.shelters}
@@ -318,7 +319,13 @@ export const HomePage = () => {
                   }));
                 }}>
                 {shelters.map((shelter) => (
-                  <SelectItem key={shelter.id}>{shelter.name}</SelectItem>
+                  <SelectItem
+                    key={shelter.id}
+                    classNames={{
+                      base: '!bg-white data-[hover=true]:!bg-accent data-[focus=true]:!bg-accent data-[selected=true]:!bg-accent',
+                    }}>
+                    {shelter.name}
+                  </SelectItem>
                 ))}
               </Select>
               <Button
