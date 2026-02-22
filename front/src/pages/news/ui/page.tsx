@@ -47,7 +47,7 @@ export const NewsPage = () => {
           ))}
         </div>
       </Container>
-      {currentNews && <CustomModalInfo info={currentNews} />}
+      {currentNews && <CustomModalInfo info={currentNews} isNews />}
     </>
   );
 };

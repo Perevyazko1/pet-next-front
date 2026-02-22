@@ -9,8 +9,9 @@ import { useQueryParams } from '@/shared/hooks/useQueryParams';
 
 interface Props {
   info: InfoCardInterface;
+  isNews?: boolean;
 }
-export const CustomModalInfo = ({ info }: Props) => {
+export const CustomModalInfo = ({ info, isNews = false }: Props) => {
   const [isOpen, setOpen] = useState<boolean>(false);
 
   const { setInfoId, infoId } = useQueryParams();
@@ -46,7 +47,7 @@ export const CustomModalInfo = ({ info }: Props) => {
           <div className={'relative'}>
             <Dialog.DialogTitle></Dialog.DialogTitle>
             <Dialog.DialogDescription></Dialog.DialogDescription>
-            <InfoCard isModal info={info} isNews />
+            <InfoCard isModal info={info} isNews={isNews} />
           </div>
         </Dialog.Content>
       </Dialog.Portal>

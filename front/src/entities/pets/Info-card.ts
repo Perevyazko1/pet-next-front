@@ -5,6 +5,7 @@ export interface InfoCardInterface {
   image: string;
   alt_image: string;
   date?: string;
+  shelter_since?: string;
   views?: number;
   created_at?: string;
 }

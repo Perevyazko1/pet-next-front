@@ -8,6 +8,7 @@ class Pet(ModeratableMixin, models.Model):
     description = models.TextField('Описание')
     image = models.ImageField('Фото', upload_to='pets/')
     alt_image = models.CharField('Alt-текст', max_length=255)
+    shelter_since = models.DateField('В приюте с', null=True, blank=True)
     views = models.PositiveIntegerField('Просмотры', default=0)
     created_at = models.DateTimeField('Дата создания', auto_now_add=True)
 
