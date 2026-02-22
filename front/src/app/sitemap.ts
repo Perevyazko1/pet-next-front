@@ -11,7 +11,7 @@ async function fetchAllPages<T extends { id: number }>(
 
   while (url) {
     try {
-      const res = await fetch(url, { next: { revalidate: 3600 } });
+      const res: Response = await fetch(url, { next: { revalidate: 3600 } } as RequestInit);
       if (!res.ok) break;
       const data = await res.json();
       results.push(...(data.results ?? []));
