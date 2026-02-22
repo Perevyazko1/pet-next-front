@@ -9,3 +9,4 @@ class ShelterListView(generics.ListAPIView):
     queryset = Shelter.objects.all()
     serializer_class = ShelterSerializer
     permission_classes = [AllowAny]
+    pagination_class = None
