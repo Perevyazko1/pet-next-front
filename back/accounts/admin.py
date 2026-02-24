@@ -53,32 +53,50 @@ class RoleUserAdmin(UnfoldModelAdmin, DjangoUserAdmin):
         ('Статус', {'fields': ('is_active',)}),
     )
 
+    def get_fieldsets(self, request, obj=None):
+        if obj is None:
+            return self.add_fieldsets
+        return self.fieldsets
+
     def get_form(self, request, obj=None, **kwargs):
+        # Exclude password fields so super() doesn't reject them
+        # as unknown model fields; we add them manually after.
+        if obj is not None:
+            kwargs['fields'] = [
+                f
+                for fieldset in self.fieldsets
+                for f in fieldset[1]['fields']
+                if f not in ('new_password1', 'new_password2')
+            ]
         form_class = super().get_form(request, obj, **kwargs)
 
-        class FormWithPassword(form_class):
-            new_password1 = forms.CharField(
-                label='Новый пароль',
-                widget=forms.PasswordInput,
-                required=False,
-            )
-            new_password2 = forms.CharField(
-                label='Подтверждение пароля',
-                widget=forms.PasswordInput,
-                required=False,
-            )
+        if obj is not None:
+            class FormWithPassword(form_class):
+                new_password1 = forms.CharField(
+                    label='Новый пароль',
+                    widget=forms.PasswordInput,
+                    required=False,
+                )
+                new_password2 = forms.CharField(
+                    label='Подтверждение пароля',
+                    widget=forms.PasswordInput,
+                    required=False,
+                )
 
-            def clean(self):
-                cleaned = super().clean()
-                p1 = cleaned.get('new_password1')
-                p2 = cleaned.get('new_password2')
-                if p1 or p2:
-                    if p1 != p2:
-                        raise forms.ValidationError('Пароли не совпадают.')
-                    validate_password(p1)
-                return cleaned
+                def clean(self):
+                    cleaned = super().clean()
+                    p1 = cleaned.get('new_password1')
+                    p2 = cleaned.get('new_password2')
+                    if p1 or p2:
+                        if p1 != p2:
+                            raise forms.ValidationError(
+                                'Пароли не совпадают.'
+                            )
+                        validate_password(p1)
+                    return cleaned
 
-        return FormWithPassword
+            return FormWithPassword
+        return form_class
 
     def get_queryset(self, request):
         return self.model.objects.all()
