@@ -1,7 +1,9 @@
+from django import forms
 from django.contrib import admin
 from django.contrib.admin.sites import NotRegistered
 from django.contrib.auth.admin import UserAdmin as DjangoUserAdmin
 from django.contrib.auth.models import User, Group
+from django.contrib.auth.password_validation import validate_password
 from unfold.admin import ModelAdmin as UnfoldModelAdmin
 
 from .helpers import is_admin, is_moderator
@@ -44,8 +46,39 @@ class RoleUserAdmin(UnfoldModelAdmin, DjangoUserAdmin):
     fieldsets = (
         (None, {'fields': ('username',)}),
         ('Личные данные', {'fields': ('first_name', 'last_name', 'email')}),
+        ('Новый пароль', {
+            'fields': ('new_password1', 'new_password2'),
+            'description': 'Оставьте пустым, если не хотите менять пароль.',
+        }),
         ('Статус', {'fields': ('is_active',)}),
     )
+
+    def get_form(self, request, obj=None, **kwargs):
+        form_class = super().get_form(request, obj, **kwargs)
+
+        class FormWithPassword(form_class):
+            new_password1 = forms.CharField(
+                label='Новый пароль',
+                widget=forms.PasswordInput,
+                required=False,
+            )
+            new_password2 = forms.CharField(
+                label='Подтверждение пароля',
+                widget=forms.PasswordInput,
+                required=False,
+            )
+
+            def clean(self):
+                cleaned = super().clean()
+                p1 = cleaned.get('new_password1')
+                p2 = cleaned.get('new_password2')
+                if p1 or p2:
+                    if p1 != p2:
+                        raise forms.ValidationError('Пароли не совпадают.')
+                    validate_password(p1)
+                return cleaned
+
+        return FormWithPassword
 
     def get_queryset(self, request):
         return self.model.objects.all()
@@ -58,6 +91,10 @@ class RoleUserAdmin(UnfoldModelAdmin, DjangoUserAdmin):
             group = Group.objects.filter(name=self.role_group_name).first()
             if group:
                 obj.groups.add(group)
+        new_password = form.cleaned_data.get('new_password1')
+        if new_password:
+            obj.set_password(new_password)
+            obj.save()
 
     def has_module_permission(self, request):
         return is_moderator(request.user)
