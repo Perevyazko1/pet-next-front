@@ -15,7 +15,7 @@ class News(ModeratableMixin, models.Model):
 
     class Meta:
         verbose_name = 'Новость'
-        verbose_name_plural = 'Новости'
+        verbose_name_plural = 'Список новостей'
         ordering = ['-date']
 
     def __str__(self):

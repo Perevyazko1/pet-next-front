@@ -15,7 +15,7 @@ class Pet(ModeratableMixin, models.Model):
 
     class Meta:
         verbose_name = 'Питомец'
-        verbose_name_plural = 'Питомцы'
+        verbose_name_plural = 'Список питомцев'
         ordering = ['-created_at']
 
     def __str__(self):
