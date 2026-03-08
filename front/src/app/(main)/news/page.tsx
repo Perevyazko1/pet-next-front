@@ -5,7 +5,7 @@ import type { Metadata } from 'next';
 export const metadata: Metadata = {
   title: 'Новости',
   description:
-    'Последние новости приюта для животных Лапки — истории спасения, события и достижения нашего приюта. ',
+    'Последние новости приюта для животных Лапки — истории спасения, события и достижения нашего приюта.',
   alternates: { canonical: 'https://paws-pets.ru/news' },
   openGraph: {
     title: 'Новости | Приют Лапки',
